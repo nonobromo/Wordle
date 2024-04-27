@@ -7,37 +7,7 @@ let currentLetter = 0;
 let correctWord = words[Math.floor(Math.random() * words.length)];
 const btns = document.querySelectorAll(".btn");
 
-btns.forEach(e => e.addEventListener("click", () => {
-    let btnKey = String(e.innerHTML);
 
-    const btns = document.getElementsByClassName('btn');
-
-    // console.log(btnKey === btns[0].innerHTML.toLocaleLowerCase());
-
-    for (let b = 0; b < btns.length; b++) {
-        if (btnKey === btns[b].innerHTML.toLocaleLowerCase()) {
-            btns[b].classList.add('btn-bgc');
-            removeBgc(btnKey)
-        }
-    }
-
-    if (btnKey === 'Del' && currentLetter !== 0) {
-        removeLet();
-        return;
-    }
-
-    if (btnKey === 'Enter') {
-        enterGuess();
-        return;
-    }
-
-    let keyPressed = btnKey.match(/[a-z]/gi);
-    if (!keyPressed || keyPressed.length > 1) {
-        return;
-    } else {
-        insertLetter(btnKey);
-    }
-}))
 
 function makeGameBoard() {
     for (let i = 0; i < 6; i++) {
@@ -88,9 +58,40 @@ window.addEventListener('keydown', (e) => {
         insertLetter(btnKey);
     }
 
-    console.log(e);
 });
 
+
+btns.forEach(e => e.addEventListener("click", () => {
+    let btnKey = String(e.innerHTML);
+
+    const btns = document.getElementsByClassName('btn');
+
+    // console.log(btnKey === btns[0].innerHTML.toLocaleLowerCase());
+
+    for (let b = 0; b < btns.length; b++) {
+        if (btnKey === btns[b].innerHTML.toLocaleLowerCase()) {
+            btns[b].classList.add('btn-bgc');
+            removeBgc(btnKey)
+        }
+    }
+
+    if (btnKey === 'Del' && currentLetter !== 0) {
+        removeLet();
+        return;
+    }
+
+    if (btnKey === 'Enter') {
+        enterGuess();
+        return;
+    }
+
+    let keyPressed = btnKey.match(/[a-z]/gi);
+    if (!keyPressed || keyPressed.length > 1) {
+        return;
+    } else {
+        insertLetter(btnKey);
+    }
+}))
 
 
 function removeBgc(btnKey) {
