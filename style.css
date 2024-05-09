@@ -62,8 +62,47 @@ body {
     transition: 200ms;
 }
 
+.text-state {
+    margin-top: 40px;
+    text-align: center;
+    display: none;
+    font-size: 1.5em;
+    color: white;
+    animation: fade-in 0.5s;
+}
+
+.text-unshow {
+    animation: fade-out 0.5s;
+}
+
+
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 @media screen and (max-width:1300px) {
     .btn {
-        font-size: 16px;
+        font-size: 20px;
     }
 }

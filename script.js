@@ -6,7 +6,7 @@ let currentGuess = [];
 let currentLetter = 0;
 let correctWord = words[Math.floor(Math.random() * words.length)];
 const btns = document.querySelectorAll(".btn");
-
+const textShow = document.querySelector(".text-state");
 
 
 function makeGameBoard() {
@@ -137,11 +137,14 @@ function enterGuess() {
     }
 
     if (guessString.length != 5) {
-        alert('Not Enough Letters');
+        textAnimation()
+        textShow.innerHTML = "Not enough letters";
+        return;
     }
 
     if (!words.includes(guessString)) {
-        alert('Word Not in List');
+        textAnimation()
+        textShow.innerHTML = "Word not in list";
         return;
     }
 
@@ -167,7 +170,8 @@ function enterGuess() {
     }
 
     if (guessString === correctWord) {
-        alert('Correct!');
+        textShow.innerHTML = "Correct!";
+        textAnimation()
         numsOfGuessLeft = 0;
         return;
     } else {
@@ -177,7 +181,9 @@ function enterGuess() {
     }
 
     if (numsOfGuessLeft === 0) {
-        alert(`Game over. The Word was ${correctWord}`);
+        textShow.style.display = "block";
+        textShow.innerHTML = `The Correct Word was ${correctWord}`;
+        return;
     }
 
 
@@ -189,6 +195,16 @@ function drawKeys(letter, colorFill) {
             elem.style.backgroundColor = colorFill
         }
     }
+}
 
+function textAnimation() {
+    setTimeout(() => {
+        textShow.style.display = "block";
+    }, 100)
+
+    setTimeout(() => {
+        textShow.style.display = "none"
+        textShow.textContent = "";
+    }, 1500)
 }
 
