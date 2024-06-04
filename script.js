@@ -32,7 +32,6 @@ window.addEventListener('keydown', (e) => {
 
     const btns = document.getElementsByClassName('btn');
 
-    // console.log(btnKey === btns[0].innerHTML.toLocaleLowerCase());
 
     for (let b = 0; b < btns.length; b++) {
         if (btnKey === btns[b].innerHTML.toLocaleLowerCase()) {
@@ -46,10 +45,13 @@ window.addEventListener('keydown', (e) => {
         return;
     }
 
-    if (btnKey === 'Enter') {
+    if (numsOfGuessLeft === 0) {
+        return;
+    } else if (btnKey === 'Enter') {
         enterGuess();
         return;
     }
+
 
     let keyPressed = btnKey.match(/[a-z]/gi);
     if (!keyPressed || keyPressed.length > 1) {
@@ -65,8 +67,6 @@ btns.forEach(e => e.addEventListener("click", () => {
     let btnKey = String(e.innerHTML);
 
     const btns = document.getElementsByClassName('btn');
-
-    // console.log(btnKey === btns[0].innerHTML.toLocaleLowerCase());
 
     for (let b = 0; b < btns.length; b++) {
         if (btnKey === btns[b].innerHTML.toLocaleLowerCase()) {
@@ -109,22 +109,30 @@ function insertLetter(btnKey) {
     if (currentLetter === 5) {
         return;
     }
+    if (numsOfGuessLeft === 0) {
+        return
+    } else {
+        btnKey = btnKey.toLowerCase();
 
-    btnKey = btnKey.toLowerCase();
+        let row = document.getElementsByClassName('letter-row')[6 - numsOfGuessLeft];
+        let box = row.children[currentLetter];
+        box.textContent = btnKey;
+        currentGuess.push(btnKey);
+        currentLetter += 1;
+    }
 
-    let row = document.getElementsByClassName('letter-row')[6 - numsOfGuessLeft];
-    let box = row.children[currentLetter];
-    box.textContent = btnKey;
-    currentGuess.push(btnKey);
-    currentLetter += 1;
 }
 
 function removeLet() {
-    let row = document.getElementsByClassName('letter-row')[6 - numsOfGuessLeft];
-    let box = row.children[currentLetter - 1];
-    box.textContent = '';
-    currentGuess.pop();
-    currentLetter -= 1;
+    if (numsOfGuessLeft === 0) {
+        return;
+    } else {
+        let row = document.getElementsByClassName('letter-row')[6 - numsOfGuessLeft];
+        let box = row.children[currentLetter - 1];
+        box.textContent = '';
+        currentGuess.pop();
+        currentLetter -= 1;
+    }
 }
 
 function enterGuess() {
@@ -151,8 +159,10 @@ function enterGuess() {
     let colorFill;
 
     for (let i = 0; i < 5; i++) {
+        let letterColor = "";
         let box = row.children[i];
         let letter = currentGuess[i]
+
         let letPosstion = rightGuess.indexOf(currentGuess[i]);
         if (letPosstion === -1) {
             colorFill = box.style.backgroundColor = 'gray';
@@ -192,7 +202,15 @@ function enterGuess() {
 function drawKeys(letter, colorFill) {
     for (const elem of document.getElementsByClassName("btn")) {
         if (elem.textContent.toLocaleLowerCase() === letter) {
-            elem.style.backgroundColor = colorFill
+            let oldColor = elem.style.backgroundColor;
+            if (oldColor === "green") {
+                return;
+            }
+            if (oldColor === "yellow" && colorFill !== "green") {
+                return;
+            }
+            elem.style.backgroundColor = colorFill;
+            break
         }
     }
 }
