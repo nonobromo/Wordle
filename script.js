@@ -193,6 +193,7 @@ function enterGuess() {
     if (numsOfGuessLeft === 0) {
         textShow.style.display = "block";
         textShow.innerHTML = `The Correct Word was ${correctWord}`;
+        btnReset.style.display = "block";
         return;
     }
 
