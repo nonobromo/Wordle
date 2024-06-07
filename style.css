@@ -75,6 +75,13 @@ body {
     animation: fade-out 0.5s;
 }
 
+.reset {
+    width: 100px;
+    display: none;
+    margin: 30px auto;
+    padding: 5px;
+    font-size: 14px;
+}
 
 
 @keyframes fade-in {

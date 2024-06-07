@@ -7,6 +7,7 @@ let currentLetter = 0;
 let correctWord = words[Math.floor(Math.random() * words.length)];
 const btns = document.querySelectorAll(".btn");
 const textShow = document.querySelector(".text-state");
+const btnReset = document.getElementById("btn-reset");
 
 
 function makeGameBoard() {
@@ -159,7 +160,6 @@ function enterGuess() {
     let colorFill;
 
     for (let i = 0; i < 5; i++) {
-        let letterColor = "";
         let box = row.children[i];
         let letter = currentGuess[i]
 
@@ -181,8 +181,9 @@ function enterGuess() {
 
     if (guessString === correctWord) {
         textShow.innerHTML = "Correct!";
-        textAnimation()
+        correctWordAnimation();
         numsOfGuessLeft = 0;
+        btnReset.style.display = "block";
         return;
     } else {
         numsOfGuessLeft -= 1;
@@ -226,3 +227,26 @@ function textAnimation() {
     }, 1500)
 }
 
+function correctWordAnimation() {
+    setTimeout(() => {
+        textShow.style.display = "block";
+    }, 100)
+}
+
+function resetGame() {
+    correctWord = words[Math.floor(Math.random() * words.length)];
+    numsOfGuess = 6;
+    numsOfGuessLeft = numsOfGuess;
+    currentLetter = 0;
+    currentGuess = [];
+    gameBoard.innerHTML = "";
+    makeGameBoard();
+    const keyboard = document.querySelectorAll("button");
+    textShow.innerHTML = "";
+    keyboard.forEach(key => {
+        key.style.backgroundColor = "#F0F0F0"
+    })
+    btnReset.style.display = "none"
+}
+
+btnReset.addEventListener("click", resetGame);
