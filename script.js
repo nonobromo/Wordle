@@ -23,7 +23,6 @@ function makeGameBoard() {
         }
         gameBoard.appendChild(row);
     }
-    console.log(correctWord);
 }
 
 makeGameBoard();
